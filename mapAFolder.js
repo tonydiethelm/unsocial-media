@@ -1,0 +1,6 @@
+/* This maps a given directory and returns an object of objects describing it. 
+One object will hold the full directory path. 
+
+
+
+*/
