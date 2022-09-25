@@ -2,6 +2,37 @@
 I need to get a list of folders
 I need to get a list of pictures. 
 I need to get a list of text files. 
+I need a list of Other Stuff that I will assume is for download.
+I want this in an object for easy access. 
+
+*/
+
+class DirectoryContents {
+    constructor(directory){
+        this.folders = fillTheContents(directory).folders;  //awkward, don't want to trigger 4 times. 
+        this.pictures = 1;
+        this.text = 1;
+        this.otherForDownload = 1;
+    }
+    fillTheContents(directory){
+        arrayOfDirectoryContents = fs.readdirSync(directory);
+
+    }
+}
+
+
+
+
+
+function isFile(path){
+    return fs.statSync(path).isFile();
+}
+
+function isDirectory(path){
+    return fs.statSync(path).isDirectory();
+}
+
+/* TESTING and notes
 
 https://nodejs.org/api/fs.html#synchronous-example
 
@@ -10,27 +41,50 @@ fs.readdir()        returns an array containing an array containing file names i
 
 fsPromises.readdir(path[, options])
 
-
 synchronous
 fs.readdirSync()    
-
-
-
 
 fsPromises.stat(path[, options])
 Can get stats to see what is a directory and what is a file. 
 fs.fstat(fd[, options], callback)
-
 */
-
-
-const testDir = '~/Codesmith';
-fs
-
-
-
-
-// For testing each module
 if (require.main !== module) {
+    const fs = require('fs'); //not strictly needed in node? 
+
+    const testDir = '/home/tony/Codesmith/unsocial-media/test';
+
+    //test, does it properly read the test dir? Does it see two cat pics and a directory? 
+    test = fs.readdirSync(testDir);
+    console.log(test);
+    //yes
+
+    //test, can I see if it's a file or a dir?
+    console.log(fs.statSync(`${testDir}/${test[0]}`).isFile());
+    console.log(fs.statSync(`${testDir}/${test[2]}`).isDirectory());
+
+    //attempting to build my object. {directories:[one, two], pictures:[1.jpg, 2.png], text:one.txt}
+    const contentsOfCurrentDirectory = {directories: [], pictures:[], text:[], downloadable:[]};
+    for(const item of test){
+        console.log(item);
+        if(isDirectory(`${testDir}/${item}`)){
+            contentsOfCurrentDirectory.directories.push(item);
+        }
+        if(isFile(`${testDir}/${item}`)){
+            if(item.endsWith('.txt') || item.endsWith('.text')){
+                contentsOfCurrentDirectory.text.push(item);
+            }else if(item.endsWith('.jpg') || item.endsWith('.jpeg') || item.endsWith('.png')){
+                contentsOfCurrentDirectory.pictures.push(item);
+            }else{
+                contentsOfCurrentDirectory.downloadable.push(item);
+            }
+        }
+    }
+    console.log(contentsOfCurrentDirectory);
+
+
+
+    
+
+
 
 }
