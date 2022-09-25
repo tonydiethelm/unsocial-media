@@ -8,20 +8,31 @@ I want this in an object for easy access.
 */
 
 class DirectoryContents {
-    constructor(directory){
-        this.folders = fillTheContents(directory).folders;  //awkward, don't want to trigger 4 times. 
-        this.pictures = 1;
-        this.text = 1;
-        this.otherForDownload = 1;
-    }
-    fillTheContents(directory){
-        arrayOfDirectoryContents = fs.readdirSync(directory);
-
-    }
-}
-
-
-
+  constructor(directory){
+      this.directories = [];
+      this.pictures = [];
+      this.text = [];
+      this.otherForDownload = [];
+      this.fillTheContents(directory);
+  }
+  fillTheContents(directory){
+      arrayOfDirectoryContents = fs.readdirSync(directory);
+      for(const item of arrayOfDirectoryContents){
+        if(isDirectory(`${directory}/${item}`)){
+            this.directories.push(item);
+        }
+        if(isFile(`${directory}/${item}`)){
+            if(item.endsWith('.txt') || item.endsWith('.text')){
+                this.text.push(item);
+            }else if(item.endsWith('.jpg') || item.endsWith('.jpeg') || item.endsWith('.png')){
+                this.pictures.push(item);
+            }else{
+                this.otherForDownload.push(item);
+            }
+        }
+      }
+  }
+}  
 
 
 function isFile(path){
