@@ -1,10 +1,13 @@
 Need to map a directory and return contents as an object?
-Need to know What's in there and what it is.
-[{blah.txt: text},{}]
+
+Do I need to watch for changes to the directory? Or just update every X seconds?
+fsPromises.watch(filename[, options])
 
 Need to read the directory map and create HTML
 
 Need to make a configuration page
+fs.copyFile(src, dest[, mode], callback)
+Don't copy, link instead. 
 
 Need to serve app and config page
 
