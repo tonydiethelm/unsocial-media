@@ -12,22 +12,41 @@ class DirectoryContents {
       this.directories = [];
       this.pictures = [];
       this.text = [];
-      this.otherForDownload = [];
+      this.other = [];
+      this.css = [];
       this.fillTheContents(directory);
   }
-  fillTheContents(directory){
-      arrayOfDirectoryContents = fs.readdirSync(directory);
+  listDirectories(){  //the directories in target directory
+    return this.directories;
+  }
+  listPictures(){     //the pictures in target directory
+    return this.pictures;
+  }
+  listText(){         //the text files in target directory
+    return this.text;
+  }
+  listCss(){         //the css files in target directory
+    return this.css;
+  }
+  listOther(){ //Everything else in target directory, assumed
+    return this.other;
+  }  
+  fillTheContents(directory){ //scans directory and sorts into directories, pictures, texts, and Others.
+      const arrayOfDirectoryContents = fs.readdirSync(directory);
       for(const item of arrayOfDirectoryContents){
         if(isDirectory(`${directory}/${item}`)){
             this.directories.push(item);
         }
         if(isFile(`${directory}/${item}`)){
             if(item.endsWith('.txt') || item.endsWith('.text')){
-                this.text.push(item);
+              this.text.push(item);
             }else if(item.endsWith('.jpg') || item.endsWith('.jpeg') || item.endsWith('.png')){
-                this.pictures.push(item);
+              this.pictures.push(item);
+            }
+            else if(item.endsWith('.css')){
+              this.css.push(item);
             }else{
-                this.otherForDownload.push(item);
+              this.other.push(item);
             }
         }
       }
@@ -42,6 +61,9 @@ function isFile(path){
 function isDirectory(path){
     return fs.statSync(path).isDirectory();
 }
+
+
+
 
 /* TESTING and notes
 
@@ -59,7 +81,7 @@ fsPromises.stat(path[, options])
 Can get stats to see what is a directory and what is a file. 
 fs.fstat(fd[, options], callback)
 */
-if (require.main !== module) {
+if (require.main === module) {
     const fs = require('fs'); //not strictly needed in node? 
 
     const testDir = '/home/tony/Codesmith/unsocial-media/test';
@@ -92,10 +114,12 @@ if (require.main !== module) {
     }
     console.log(contentsOfCurrentDirectory);
 
-
-
-    
-
+  const testDirectoryContents = new DirectoryContents('/home/tony/Codesmith/unsocial-media/test')
+  console.log(testDirectoryContents);
+  console.log(testDirectoryContents.listPictures());
 
 
 }
+
+
+export default DirectoryContents;
