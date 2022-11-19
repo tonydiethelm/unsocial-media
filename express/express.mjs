@@ -73,10 +73,10 @@ holler,
 
 
 //handle wrong URIs
-// app.use('*', 
-//   (request, response) => {
-//     response.status(404).json('Sorry, we don\'t have that here.')
-// });
+app.use('*', 
+  (request, response) => {
+    response.status(404).json('Sorry, we don\'t have that here.')
+});
 
 //handle errors
 //ToDo
