@@ -3,6 +3,9 @@
     I'll use a module to get the contents of my hard drive and return it as an object.
 */
 
+//Make sure HTML is loading this. 
+console.log('HTML is properly calling JS, and it is running.');
+
 //setup stuff
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';

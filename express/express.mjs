@@ -19,7 +19,7 @@ Actually call the HTTP server.
 import * as fs from 'fs';
 
 //get settings from settings.json
-import { settings } from './settings.mjs';
+import settings from './settings.json' assert {type: 'json'};
 
 //express set up
 import express from 'express';
@@ -39,12 +39,27 @@ import holler from '@tonydiethelm/holler';
 //Express routes and static serves
 
 //static serves
+
 //HTML, CSS, JS, settings.html
 //get file path URL object
-const publicDirectory = new URL('public', import.meta.url); 
-app.get(express.static(publicDirectory.pathname));
+const publicDirectory = new URL('../public', import.meta.url); 
+// app.get('/', express.static(publicDirectory.pathname));
+app.use('/', express.static('public'));
+
+console.log('starting static serve of ', publicDirectory.pathname);
+
 //serve up pictures
-app.get('/api/assets', express.static(settings.targetDirectory))
+app.use('/api/assets', express.static(settings.targetDirectory));
+console.log('starting static serve of ', settings.targetDirectory);
+
+
+
+// //test response for initial functionality. 
+// app.get('/', 
+//   //holler,
+//   (request, response) => {
+//     response.status(200).sendFile(publicDirectory.pathname + '/index.html')
+// });
 
 
 //handle requests to directory api
@@ -58,16 +73,16 @@ holler,
 
 
 //handle wrong URIs
-app.use('*', 
-  (request, response) => {
-    response.status(404).json('Sorry, we don\'t have that here.')
-});
+// app.use('*', 
+//   (request, response) => {
+//     response.status(404).json('Sorry, we don\'t have that here.')
+// });
 
 //handle errors
 //ToDo
 
 
 //Call the HTTP server 
-app.listen(port, () => {
+app.listen(settings.port, () => {
   console.log('Server listening on port: ' + settings.port);
  });
