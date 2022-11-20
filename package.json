@@ -1,0 +1,32 @@
+{
+  "name": "unsocial-media",
+  "version": "1.0.0",
+  "description": "Unsocial Media is a small web server that can be administrated by people without technical skills",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./express/express.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonydiethelm/unsocial-media.git"
+  },
+  "keywords": [
+    "web",
+    "server"
+  ],
+  "author": "Tony Diethelm",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/tonydiethelm/unsocial-media/issues"
+  },
+  "homepage": "https://github.com/tonydiethelm/unsocial-media#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@tonydiethelm/holler": "^1.0.6",
+    "nodemon": "^2.0.20"
+  }
+}
