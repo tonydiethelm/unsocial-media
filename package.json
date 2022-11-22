@@ -4,6 +4,7 @@
   "description": "Unsocial Media is a small web server that can be administrated by people without technical skills",
   "main": "index.js",
   "scripts": {
+    "babel": "babel --plugins transform-react-jsx --presets react ./public/react-index.js -o ./public/transpiled-index.js",
     "dev": "nodemon ./express/express.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,8 +23,14 @@
   },
   "homepage": "https://github.com/tonydiethelm/unsocial-media#readme",
   "dependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.2",
+    "@babel/plugin-transform-react-jsx": "^7.19.0",
+    "@babel/preset-react": "^7.18.6",
+    "babel-preset-react": "^6.24.1",
     "express": "^4.18.2",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "webpack": "^5.75.0"
   },
   "devDependencies": {
     "@tonydiethelm/holler": "^1.0.6",

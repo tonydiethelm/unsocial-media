@@ -4,6 +4,7 @@ I need to static serve imeges from the target directory (see README)
 I need to static serve a settings page.
 
 I need to respond to GETs with parameters to /api/directory
+I need to respond to PUTs with parameters to /api/settings
 
 I need to handle wrong URIs
 I need to handle errors
@@ -62,13 +63,19 @@ console.log('starting static serve of ', settings.targetDirectory);
 // });
 
 
-//handle requests to directory api
+//handle requests to directory apic
 app.get('/api/directory:targetDirectory',
 holler,
 (request, response) => {response.status(200).send('In progress')}
 //(request, response) => {response.status(200).send(response.locals.mapping)}
 );
 
+//handle requests to settings api
+app.get('/api/settings:port:targetDirectory',
+holler,
+(request, response) => {response.status(200).send('In progress')}
+//(request, response) => {response.status(200).send(response.locals.mapping)}
+);
 
 
 
