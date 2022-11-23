@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "babel": "babel --plugins transform-react-jsx --presets react ./public/react-index.js -o ./public/transpiled-index.js",
+    "build": "webpack",
     "dev": "nodemon ./express/express.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "@tonydiethelm/holler": "^1.0.6",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "webpack-cli": "^5.0.0"
   }
 }
