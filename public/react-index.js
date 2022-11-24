@@ -9,16 +9,16 @@ console.log('HTML is properly calling JS, and it is running.');
 //setup stuff
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './react-style.css';
+import './style.css';
 const startingDirectory = '/home/tony/Public';
 const slash = '/'; //Need to fix some directories. :/
 //const fs = require('fs');
 
 //testing div, need to make sure this works at all. 
 //Change render at bottom to Testing to see if it React is working. 
-const Testing = () => {
-    return <div>If you can see this, react is working. Yay!</div>;
-};
+// const Testing = () => {
+//     return <div>If you can see this, react is working. Yay!</div>
+// };
 
 
 /*PPPPP

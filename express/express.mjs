@@ -35,7 +35,6 @@ app.use(express.json());
 import holler from '@tonydiethelm/holler';
 
 
-
 //Express routes and static serves
 
 //static serves
@@ -52,6 +51,8 @@ console.log('starting static serve of ', publicDirectory.pathname);
 app.use('/api/assets', express.static(settings.targetDirectory));
 console.log('starting static serve of ', settings.targetDirectory);
 
+//serve up modules
+app.use('/api/modules', express.static('./node_modules'));
 
 
 // //test response for initial functionality. 
