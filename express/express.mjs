@@ -43,28 +43,22 @@ import holler from '@tonydiethelm/holler';
 //get file path URL object
 const publicDirectory = new URL('../public', import.meta.url); 
 // app.get('/', express.static(publicDirectory.pathname));
-app.use('/', express.static('public'));
-
+app.use('/', holler, express.static('public'));
 console.log('starting static serve of ', publicDirectory.pathname);
 
 //serve up pictures
-app.use('/api/assets', express.static(settings.targetDirectory));
+app.use('/api/assets', holler, express.static(settings.targetDirectory));
 console.log('starting static serve of ', settings.targetDirectory);
 
 //serve up modules
-app.use('/api/modules', express.static('./node_modules'));
+app.use('/api/modules', holler, express.static('./node_modules'));
 
 
-// //test response for initial functionality. 
-// app.get('/', 
-//   //holler,
-//   (request, response) => {
-//     response.status(200).sendFile(publicDirectory.pathname + '/index.html')
-// });
+
 
 
 //handle requests to directory api
-app.get('/api/directory:targetDirectory',
+app.get('/api/directory/:targetDirectory',
 holler,
 (request, response) => {response.status(200).send('In progress')}
 //(request, response) => {response.status(200).send(response.locals.mapping)}
