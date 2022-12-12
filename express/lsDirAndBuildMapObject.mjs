@@ -13,7 +13,7 @@ I want this in an object of arrays for easy access.
 // use import * as fs from 'node:fs/promises' for promise based.
 import fs from 'node:fs';
 
-class lsDirAndBuildObjects {
+class mapObject {
   constructor(directory){
       this.directories = [];
       this.pictures = [];
@@ -136,4 +136,4 @@ if (require.main === module) {
 }
 */
 
-export default lsDirAndBuildMapObjects;
+export default mapObject;

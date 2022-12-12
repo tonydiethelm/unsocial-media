@@ -1,12 +1,12 @@
 /* What this needs to do:
 I need to static serve my HTML, JS, CSS.
-I need to static serve imeges from the target directory (see README)
+I need to static serve imeges from the target directory (see README).
 I need to static serve a settings page.
 
-I need to respond to GETs with parameters to /api/directory
+I need to respond to GETs with parameters to /api/directory. 
 
-I need to handle wrong URIs
-I need to handle errors
+I need to handle wrong URIs.
+I need to handle errors.
 Actually call the HTTP server.
 
 */
@@ -33,6 +33,7 @@ app.use(express.json());
 
 //extra stuff
 import holler from '@tonydiethelm/holler';
+import lsDirAndBuildObjects from './lsDirAndBuildMapObject.mjs';
 
 
 //Express routes and static serves
@@ -50,16 +51,13 @@ console.log('starting static serve of ', publicDirectory.pathname);
 app.use('/api/assets', holler, express.static(settings.targetDirectory));
 console.log('starting static serve of ', settings.targetDirectory);
 
-//serve up modules
-app.use('/api/modules', holler, express.static('./node_modules'));
-
-
 
 
 
 //handle requests to directory api
 app.get('/api/directory/:targetDirectory',
 holler,
+mapMyDirectory,
 (request, response) => {response.status(200).send('In progress')}
 //(request, response) => {response.status(200).send(response.locals.mapping)}
 );
