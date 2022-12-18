@@ -57,7 +57,7 @@ Someone clicks on a button...
 does a get with target directory in request.body to backend... 
 runs through middleware to get directory map...
 comes back to react as reply, change state with it.
-
+React rerenders page appropriately.
 
 */
 
@@ -85,9 +85,9 @@ class App extends Component {
     //  further loads will NOT change the state, so won't rerender. Might cause uncessessary GET requests?
     //  Can put a "first load: true" to check before doing it if it's a problem. 
     componentDidMount() {
-        fetch('/directory', {           //apparently no need for a hostname?
-            method: 'POST',             //Annoys me that fetch won't do a GET with stuff in the request.body. Fine. Post it is. 
-            body: JSON.stringify({targetDirectory: '/home/tony/Public'}),
+        fetch(`/api/directory/?targetDirectory=${startingDirectory}`, {           
+            method: 'GET',             //Annoys me that fetch won't do a GET with stuff in the request.body. Fine. Post it is. 
+            //body: JSON.stringify({targetDirectory: startingDirectory}),
             headers:{
                 'Content-Type': 'application/json'
             },
@@ -111,10 +111,9 @@ class App extends Component {
     //Eventually, need to do another post when the user clicks on one of the buttons representing a folder. 
     //on a click, get the target directory and send a POST to /directory, update state with the response. 
     displayAFolder(targetDirectory) {
-        console.log('Sending POST fetch for ', targetDirectory);
-        fetch('/directory', {           //apparently no need for a hostname?
-            method: 'POST',             //Annoys me that fetch won't do a GET with stuff in the request.body. Fine. Post it is. 
-            body: JSON.stringify({targetDirectory: targetDirectory}),
+        console.log('Sending GET fetch for ', targetDirectory);
+        fetch(`/api/directory/?targetDirectory=${targetDirectory}`, {           //apparently no need for a hostname?
+            method: 'GET',             //Annoys me that fetch won't do a GET with stuff in the request.body. Fine. Post it is. 
             headers:{
                 'Content-Type': 'application/json'
             },
@@ -142,10 +141,9 @@ class App extends Component {
         return(
             <div id="app">
                 {console.log('Our state is...', this.state)}
-                {console.log('Our directoryToShow is...', this.directoryToShow)}
+                {console.log('Our directoryToShow is...', this.state.directoryToShow)}
                 
                 <div id="navigation">
-                    <p>Navigation</p>
                     <Link
                         name = 'Home'
                         target={startingDirectory}
@@ -168,16 +166,16 @@ class App extends Component {
                 <div id="display">
                     <h1>Welcome to Tony's Unsocial Media Page</h1>
                     <div id="aroundPictures">
-                        {this.state.pictures.map((pictureName, index) =>
+                        {this.state.pictures.map((pictureLink, index) =>
                             (<Picture
-                                name = {pictureName}
-                                target={pictureName}
+                                pictureKey = {index}
+                                pictureLink={pictureLink}
                             />
                         ))}
                     </div>
                     {this.state.text.map((individualText, index) =>
                         (<Text
-                            key = {index}
+                            textKey = {index}
                             individualText={individualText}
                         />
                         ))}
@@ -208,7 +206,7 @@ class Picture extends Component{
     render() {
         return(
             <div className = "picture">
-                <img src = {this.props.target} key = {this.props.name} className = 'same'></img>
+                <img src = {this.props.pictureLink} key = {this.props.pictureKey} className = 'same'></img>
             </div>
             )
     }

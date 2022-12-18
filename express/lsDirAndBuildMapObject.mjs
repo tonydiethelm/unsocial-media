@@ -12,6 +12,8 @@ I want this in an object of arrays for easy access.
 //from documentation, import * as fs from 'node:fs' for callback and sync, 
 // use import * as fs from 'node:fs/promises' for promise based.
 import fs from 'node:fs';
+//get settings from settings.json
+import settings from './settings.json' assert {type: 'json'};
 
 class mapObject {
   constructor(directory){
@@ -39,7 +41,10 @@ class mapObject {
   }  
 
   fillTheContents(directory){ //scans directory and sorts into directories, pictures, texts, and Others.
+    
+    console.log("checking that I have access to settings...", settings.targetDirectory);
     console.log('scanning HD, creating object');
+
     const arrayOfDirectoryContents = fs.readdirSync(directory);
     //handle directories
     for(const item of arrayOfDirectoryContents){
@@ -48,19 +53,20 @@ class mapObject {
       }
       //handle files
       if(isFile(`${directory}/${item}`)){
-      //text
-      if(item.endsWith('.txt') || item.endsWith('.text')){
-        this.text.push(item);
-      //pictures
-      }else if(item.endsWith('.jpg') || item.endsWith('.jpeg') || item.endsWith('.png')){
-        this.pictures.push(item);
-      //CSS
-      }else if(item.endsWith('.css')){
-        this.css.push(item);
-      //Other
-      }else{
-        this.other.push(item);
-      }
+        //text
+        if(item.endsWith('.txt') || item.endsWith('.text')){
+          this.text.push(item);
+        //pictures
+        //Needs to return pathnames without the starting directory. 
+        }else if(item.endsWith('.jpg') || item.endsWith('.jpeg') || item.endsWith('.png')){
+          this.pictures.push(directory + "/" + item);
+        //CSS
+        }else if(item.endsWith('.css')){
+          this.css.push(item);
+        //Other
+        }else{
+          this.other.push(item);
+        }
       }
     }
   console.log('object is...', this);

@@ -29,7 +29,8 @@ const app = express();
 app.use(express.json());
 
 //import my middleware/controllers
-//ToDo
+import mapMyDirectory from './mapMyDirectory.mjs';
+import mapObject from './lsDirAndBuildMapObject.mjs';
 
 //extra stuff
 import holler from '@tonydiethelm/holler';
@@ -44,22 +45,28 @@ import lsDirAndBuildObjects from './lsDirAndBuildMapObject.mjs';
 //get file path URL object
 const publicDirectory = new URL('../public', import.meta.url); 
 // app.get('/', express.static(publicDirectory.pathname));
-app.use('/', holler, express.static('public'));
+app.use('/', 
+holler, 
+express.static('public'));
 console.log('starting static serve of ', publicDirectory.pathname);
 
 //serve up pictures
-app.use('/api/assets', holler, express.static(settings.targetDirectory));
+app.use('/api/assets', 
+holler, 
+express.static(settings.targetDirectory));
 console.log('starting static serve of ', settings.targetDirectory);
 
 
 
 
 //handle requests to directory api
-app.get('/api/directory/:targetDirectory',
+// app.get('/api/directory/:targetDirectory',
+app.get('/api/directory/',
 holler,
 mapMyDirectory,
-(request, response) => {response.status(200).send('In progress')}
-//(request, response) => {response.status(200).send(response.locals.mapping)}
+holler,
+//(request, response) => {response.status(200).send('In progress')}
+(request, response) => {response.status(200).send(response.locals.mapping)}
 );
 
 
