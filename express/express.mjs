@@ -14,37 +14,25 @@ Actually call the HTTP server.
 
 
 //set up everything
-
-//fs for pathnames
-import * as fs from 'fs';
-
 //get settings from settings.json
 import settings from './settings.json' assert {type: 'json'};
-
 //express set up
 import express from 'express';
 const app = express();
-
 //automatically destring incoming JSON
 app.use(express.json());
-
 //import my middleware/controllers
 import mapMyDirectory from './mapMyDirectory.mjs';
-import mapObject from './lsDirAndBuildMapObject.mjs';
-
 //extra stuff
 import holler from '@tonydiethelm/holler';
-import lsDirAndBuildObjects from './lsDirAndBuildMapObject.mjs';
+
 
 
 //Express routes and static serves
-
 //static serves
-
 //HTML, CSS, JS, settings.html
 //get file path URL object
 const publicDirectory = new URL('../public', import.meta.url); 
-// app.get('/', express.static(publicDirectory.pathname));
 app.use('/', 
 holler, 
 express.static('public'));
@@ -60,12 +48,10 @@ console.log('starting static serve of ', settings.targetDirectory);
 
 
 //handle requests to directory api
-// app.get('/api/directory/:targetDirectory',
 app.get('/api/directory/',
-holler,
+// holler,
 mapMyDirectory,
 holler,
-//(request, response) => {response.status(200).send('In progress')}
 (request, response) => {response.status(200).send(response.locals.mapping)}
 );
 

@@ -20,16 +20,17 @@ How is the directory path going to be sent in?
 //setup stuff
 import fs from 'node:fs';
 //Need the module to create the object. 
-import mapObject from './lsDirAndBuildMapObject.mjs';
-
+//import mapObject from './lsDirAndBuildMapObject.mjs';
+//get settings from settings.json
+import settings from './settings.json' assert {type: 'json'};
 
 
 const mapMyDirectory = (request, response, next) => {
   console.log('mapping directory');
-  // console.log('starting directory is...', settings.startingDirectory)
-    //get requested directory
+
+  //get requested directory
     const targetDirectory = request.query.targetDirectory;
-    //console.log(targetDirectory, typeof targetDirectory);
+
     //run it through the module
     const mapping = new mapObject(targetDirectory);
     //send it onward through response.locals.mapping, as dictated by route in express-index.js
@@ -37,11 +38,72 @@ const mapMyDirectory = (request, response, next) => {
     //console.log('mapping is...', mapping);
     response.locals.mapping = mapping;
     return next();
+}
+
+class mapObject {
+  constructor(directory){
+      this.directories = [];
+      this.pictures = [];
+      this.text = [];
+      this.other = [];
+      this.css = [];
+      this.fillTheContents(directory);
   }
 
+  fillTheContents(directory){ //scans directory and sorts into directories, pictures, texts, and Others.
+  
+    console.log("checking that I have access to settings...", settings.targetDirectory);
+    console.log('scanning HD, creating object');
 
+    const arrayOfDirectoryContents = fs.readdirSync(directory);
+    //handle directories
+    for(const item of arrayOfDirectoryContents){
+      if(isDirectory(`${directory}/${item}`)){
+        this.directories.push(item);
+      }
+      //handle files
+      if(isFile(`${directory}/${item}`)){
+        //text
+        if(isText(item)){
+          this.text.push(item);
+        //pictures
+        //Needs to return pathnames without the starting directory. 
+        }else if(isPicture(item)){
+          console.log('Directory is... ', directory, typeof directory, directory.length);
+          console.log('settings.targetdirectory is...', settings.targetDirectory, typeof settings.targetDirectory, settings.targetDirectory.length);
+          console.log(directory.replace(settings.targetDirectory, "Why not?"));
+          this.pictures.push(directory.replace(settings.targetDirectory, "/api/assets/") + "/" + item);
+        //CSS
+        }else if(isCSS(item)){
+          this.css.push(item);
+        //Other
+        }else{
+          this.other.push(item);
+        }
+      }
+    }
+  }
+}
 
+function isFile(path){
+  return fs.statSync(path).isFile();
+}
 
+function isDirectory(path){
+  return fs.statSync(path).isDirectory();
+}
+
+function isCSS(item){
+  return item.endsWith('.css');
+}
+
+function isPicture(item){
+  return item.endsWith('.jpg') || item.endsWith('.jpeg') || item.endsWith('.png');
+}
+
+function isText(item){
+  return item.endsWith('.txt') || item.endsWith('.text');
+}
 
 
 export default mapMyDirectory
