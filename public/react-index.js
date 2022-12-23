@@ -12,7 +12,6 @@ import ReactDOM from 'react-dom';
 import './style.css';
 const startingDirectory = '/home/tony/Public';
 const slash = '/'; //Need to fix some directories. :/
-//const fs = require('fs');
 
 //testing div, need to make sure this works at all. 
 //Change render at bottom to Testing to see if it React is working. 
@@ -166,20 +165,20 @@ class App extends Component {
                 <div id="display">
                     <h1>Welcome to Tony's Unsocial Media Page</h1>
                     <div id="aroundPictures">
-                        {this.state.pictures.map((pictureLink, index) =>
-                            (<Picture
-                                pictureKey = {index}
-                                pictureLink={pictureLink}
-                            />
-                        ))}
+                      {this.state.pictures.map((pictureLink, index) =>
+                        (<Picture
+                          pictureKey = {index}
+                          pictureLink={pictureLink}
+                        />
+                        ))
+                      }
                     </div>
                     {this.state.text.map((individualText, index) =>
                         (<Text
-                            textKey = {index}
-                            individualText={individualText}
+                          textKey = {index}
+                          individualText={individualText}
                         />
-                        ))}
-                    
+                        ))}                 
                 </div>
             </div>
         )
@@ -190,37 +189,36 @@ class App extends Component {
 
 //Make elements that will need to be looped/copied here. Links, Pictures, Texts. 
 class Link extends Component{
-    render() {
-        return(
-            <div className="link">
-                <button key = {this.props.name} className = 'same' onClick = {() => {this.props.displayAFolder(this.props.target)}}> 
-                {this.props.name} 
-                </button>
-               
-            </div>
-        )
-    }
+  render() {
+    return(
+      <div className="link">
+        <button key = {this.props.name} className = 'same' onClick = {() => {this.props.displayAFolder(this.props.target)}}> 
+          {this.props.name} 
+        </button>           
+      </div>
+    )
+  }
 }
 
 class Picture extends Component{
-    render() {
-        return(
-            <div className = "picture">
-                <img src = {this.props.pictureLink} key = {this.props.pictureKey} className = 'same'></img>
-            </div>
-            )
-    }
+  render() {
+    return(
+      <div className = "picture">
+        <img src = {this.props.pictureLink} key = {this.props.pictureKey} className = 'same'></img>
+      </div>
+    )
+  }
 }
 
 
 class Text extends Component{
-    render() {
-        return(
-            <div className="text same" key = {this.props.index}> 
-                <p>{this.props.individualText}</p>
-            </div>
-            )
-    }
+  render() {
+    return(
+      <div className="text same" key = {this.props.index}> 
+        {this.props.individualText.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    )
+  }
 }
 
 

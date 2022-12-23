@@ -34,13 +34,13 @@ import holler from '@tonydiethelm/holler';
 //get file path URL object
 const publicDirectory = new URL('../public', import.meta.url); 
 app.use('/', 
-holler, 
+// holler, 
 express.static('public'));
 console.log('starting static serve of ', publicDirectory.pathname);
 
 //serve up pictures
 app.use('/api/assets', 
-holler, 
+// holler, 
 express.static(settings.targetDirectory));
 console.log('starting static serve of ', settings.targetDirectory);
 
@@ -49,7 +49,7 @@ console.log('starting static serve of ', settings.targetDirectory);
 
 //handle requests to directory api
 app.get('/api/directory/',
-// holler,
+holler,
 mapMyDirectory,
 holler,
 (request, response) => {response.status(200).send(response.locals.mapping)}

@@ -32,10 +32,9 @@ const mapMyDirectory = (request, response, next) => {
     const targetDirectory = request.query.targetDirectory;
 
     //run it through the module
-    const mapping = new mapObject(targetDirectory);
-    //send it onward through response.locals.mapping, as dictated by route in express-index.js
-    //testing
-    //console.log('mapping is...', mapping);
+    const mapping =  new mapObject(targetDirectory);
+
+    //put it on the response to return to client. 
     response.locals.mapping = mapping;
     return next();
 }
@@ -51,8 +50,6 @@ class mapObject {
   }
 
   fillTheContents(directory){ //scans directory and sorts into directories, pictures, texts, and Others.
-  
-    console.log("checking that I have access to settings...", settings.targetDirectory);
     console.log('scanning HD, creating object');
 
     const arrayOfDirectoryContents = fs.readdirSync(directory);
@@ -65,14 +62,11 @@ class mapObject {
       if(isFile(`${directory}/${item}`)){
         //text
         if(isText(item)){
-          this.text.push(item);
+          this.text.push(textToParagraphs(`${directory}/${item}`));
         //pictures
         //Needs to return pathnames without the starting directory. 
         }else if(isPicture(item)){
-          console.log('Directory is... ', directory, typeof directory, directory.length);
-          console.log('settings.targetdirectory is...', settings.targetDirectory, typeof settings.targetDirectory, settings.targetDirectory.length);
-          console.log(directory.replace(settings.targetDirectory, "Why not?"));
-          this.pictures.push(directory.replace(settings.targetDirectory, "/api/assets/") + "/" + item);
+          this.pictures.push(directory.replace(settings.targetDirectory, "/api/assets/") + item);
         //CSS
         }else if(isCSS(item)){
           this.css.push(item);
@@ -104,6 +98,26 @@ function isPicture(item){
 function isText(item){
   return item.endsWith('.txt') || item.endsWith('.text');
 }
+
+function textToHTML(itemWithDirectory){
+  //I want to read the item at directory.
+  //I want to append a <p> tag. 
+  //I want to replace /\r?\n/g with <p>
+  //return the whole string as one thing. 
+
+  let stringToReturn = "<p>";
+  const text = fs.readFileSync(itemWithDirectory, 'utf8');
+  stringToReturn += text.replace(/\n/g, "<p>");
+  console.log('text is...', text);
+  console.log('string now is...', stringToReturn);
+  return stringToReturn;
+};
+
+function textToParagraphs(itemWithDirectory){
+  const text = fs.readFileSync(itemWithDirectory, 'utf8');
+  return text.split(/\n/);
+}
+
 
 
 export default mapMyDirectory
