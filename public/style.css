@@ -75,10 +75,12 @@ button {
 }
 
 img {
-    width: 200px;
+    width: 100px;
     transition: transform .2s;
 }
 
+/* This makes the image bigger on hover. Removing temporarily while I search for a better solution. 
 img:hover {
     transform: scale(2.5);
 }
+*/
