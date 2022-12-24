@@ -66,7 +66,10 @@ class mapObject {
         //pictures
         //Needs to return pathnames without the starting directory. 
         }else if(isPicture(item)){
-          this.pictures.push(directory.replace(settings.targetDirectory, "/api/assets/") + item);
+          console.log("Pictures...");
+          console.log("targeting ", directory, " taking off ", settings.targetDirectory);
+          console.log("and putting on /api/assets/ + ", item);
+          this.pictures.push(directory.replace(settings.targetDirectory, "/api/assets") + `/${item}`);
         //CSS
         }else if(isCSS(item)){
           this.css.push(item);
@@ -118,6 +121,8 @@ function textToParagraphs(itemWithDirectory){
   return text.split(/\n/);
 }
 
-
+//function pictureToProperLink()
 
 export default mapMyDirectory
+
+
