@@ -20,8 +20,8 @@ div#navigation {
 }
 
 div#display {
-    width: 90%;
-    margin: 10px;
+    width: 80%;
+    margin: auto;
     /* border-style: dotted;
     border-width: 2px;
     border-color: green; */
@@ -30,6 +30,7 @@ div#display {
 div#aroundPictures {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     /* border-style: dotted;
     border-width: 2px;
@@ -54,9 +55,11 @@ div.link {
 }
 
 .same {
-    box-shadow: 7px 7px;
-    border-radius: 10px;
+  /*Use this to change box shadow and border radius for everything.*/
+  box-shadow: 7px 7px;
+  border-radius: 10px;
 }
+
 div.text {
     border-style: solid;
     border-width: 2px;
@@ -72,6 +75,7 @@ button {
     height: 80px;
     width: 80px;
     font-size: medium;
+    background-color: white;
 }
 
 img {

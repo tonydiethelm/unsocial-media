@@ -42,7 +42,7 @@ What needs to be in state?
     I need the root directory.
     I need the directory to show.
     I do NOT need "up one directory". Can send .. to back end to get that. 
-    I need  folders for navigation, pictures for pictures, text for text. 
+    I need folders for navigation, pictures for pictures, text for text. 
 
 app class with constructor, state, and click functions, navigation div, display div. 
 navigation
@@ -53,7 +53,7 @@ text
 
 What's my data flow? 
 Someone clicks on a button... 
-does a get with target directory in request.body to backend... 
+does a get with target directory in request params to backend... 
 runs through middleware to get directory map...
 comes back to react as reply, change state with it.
 React rerenders page appropriately.
@@ -200,11 +200,15 @@ class Link extends Component{
   }
 }
 
+
+
 class Picture extends Component{
   render() {
     return(
       <div className = "picture">
-        <img src = {this.props.pictureLink} key = {this.props.pictureKey} className = 'same'></img>
+        <a target="_blank" href={this.props.pictureLink}>
+          <img src = {this.props.pictureLink} key = {this.props.pictureKey} className = 'same'></img>
+        </a>
       </div>
     )
   }
