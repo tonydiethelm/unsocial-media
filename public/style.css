@@ -67,9 +67,7 @@ div.text {
     margin: 10px;
 }
 
-button:hover {
-    box-shadow: 15px 15px;
-}
+
 
 button {
     height: 80px;
@@ -78,13 +76,14 @@ button {
     background-color: white;
 }
 
-img {
-    width: 100px;
-    transition: transform .2s;
+button:hover {
+  box-shadow: 15px 15px;
 }
 
-/* This makes the image bigger on hover. Removing temporarily while I search for a better solution. 
-img:hover {
-    transform: scale(2.5);
+img {
+    width: 100px;
 }
-*/
+
+img:hover {
+  box-shadow: 15px 15px;
+}

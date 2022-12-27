@@ -163,7 +163,6 @@ class App extends Component {
                 </div>
                 
                 <div id="display">
-                    <h1>Welcome to Tony's Unsocial Media Page</h1>
                     <div id="aroundPictures">
                       {this.state.pictures.map((pictureLink, index) =>
                         (<Picture
